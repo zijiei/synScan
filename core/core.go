@@ -55,6 +55,7 @@ func getMac() {
 	req.SetTimeout(1)
 	req.Get("https://www.baidu.com/")
 }
+
 func recv(result chan string) {
 	var (
 		handle      *pcap.Handle
@@ -65,17 +66,14 @@ func recv(result chan string) {
 	// 打开某一网络设备
 	handle, err = pcap.OpenLive(device, snapshotLen, promiscuous, timeout)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(0)
+		fmt.Println("You requested a scan type which requires root privileges.\nQUITTING!")
+		os.Exit(3)
 	}
 	defer handle.Close()
 
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType()) // LinkType默认是以太网链路
 	// packetSource.Packets() 是个channel类型，此处是从channel类型的数据通道中持续的读取网络数据包
 	for packet := range packetSource.Packets() {
-		if DnsLayer := packet.Layer(layers.LayerTypeDNS); DnsLayer != nil {
-
-		}
 		if IpLayer := packet.Layer(layers.LayerTypeIPv4); IpLayer != nil {
 			// 获取网卡/网关mac地址
 			if DstMac == nil {
@@ -211,7 +209,7 @@ func Execute() {
 
 	// 监听数据包
 	go recv(result)
-	//输出结果
+	// 输出结果去重
 	go func() {
 		for p := range result {
 			if !IsContain(results, p) {
