@@ -1,6 +1,6 @@
 # synScan
 GoLang 全端口 **syn** 扫描
-
+自定义TCP/IP头
 syn扫描需要监听网卡，如果报错可能是权限问题
 
 
