@@ -10,8 +10,10 @@ sudo ./masscan [ip] [rate]  // rate不填默认1500 速率取决于网络和网�
 
 
 ### MacOs
-![img.png](img/img.png)
+![img.png](imgs/img.png)
 
 ### Centos
-![img_2.png](img/img_2.png)
+![img_2.png](imgs/img_2.png)
 
+### Windows
+![img.png](imgs/img_3.png)
